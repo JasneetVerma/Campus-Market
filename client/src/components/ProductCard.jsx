@@ -1,44 +1,55 @@
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 function ProductCard({ product }) {
+  const image =
+    product.images?.length > 0
+      ? product.images[0]
+      : product.image;
+
   return (
-    <div>
-      <div>
-        {product.image ? (
+    <Link
+      to={`/products/${product._id}`}
+      className="block border border-black p-3"
+    >
+      {/* Product Image */}
+      <div className="h-40 border border-gray-300 flex items-center justify-center">
+        {image ? (
           <img
-            src={product.image}
-            alt={product.name}
-            width="200"
+            src={image}
+            alt={product.title}
+            className="w-full h-full object-cover"
           />
         ) : (
-          <div
-            style={{
-              width: '200px',
-              height: '120px',
-              backgroundColor: '#eeeeee',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            No Image
-          </div>
+          <span>No Image</span>
         )}
       </div>
 
-      <h3>{product.name}</h3>
+      {/* Product Information */}
+      <div className="mt-3">
 
-      <p>₹{product.price}</p>
+        <h3 className="font-medium">
+          {product.title}
+        </h3>
 
-      <p>{product.category}</p>
+        <p>
+          ₹{product.price}
+        </p>
 
-      <p>{product.condition || 'Condition not specified'}</p>
+        <p>
+          {product.category}
+        </p>
 
-      <Link to={`/product/${product.id}`}>
-        <button>View Details</button>
-      </Link>
-    </div>
-  )
+        <p>
+          {product.condition}
+        </p>
+
+        <p>
+          {product.seller?.name || product.seller}
+        </p>
+
+      </div>
+    </Link>
+  );
 }
 
-export default ProductCard
+export default ProductCard;
